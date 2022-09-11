@@ -12,8 +12,8 @@ def parse_search_phrase(allowed_fields, phrase):
         base_qs.add(Q(st), Q.OR)
 
     print(base_qs)
-    return base_qs
-    # return Q(categories__name__contains=phrase)
+    # return base_qs
+    return Q(categories__name__contains=phrase)
 
 # Create your views here.
 def blog_index(request):
@@ -27,7 +27,6 @@ def blog_index(request):
 def blog_category(request, category):
     allowed_fields = {"name": Post.categories.field.name}
     filter = parse_search_phrase(allowed_fields, category)
-    print
     posts = Post.objects.filter(filter).order_by(
         "-created_on"
     )
